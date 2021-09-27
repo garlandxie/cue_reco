@@ -1,7 +1,8 @@
 # libraries ----
 library(readr)
 library(here)
-library(skimr)
+library(assertr)
+library(magrittr)
 
 # import ----
 mapbox <- read_csv(
@@ -14,3 +15,12 @@ str(mapbox)
 
 # check names ----
 names(mapbox)
+
+# validate ----
+
+errors <- mapbox %>% 
+  assertr::verify(xlat >= 43) %>%
+  assertr::verify(xlon <= 79) %>%
+  assertr::verify(agg_day_period >= 0) %>%
+  assertr::verify(agg_time_period >= 0)
+  
