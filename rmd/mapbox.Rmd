@@ -11,4 +11,42 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Metadata
 
-The following notes are from the MapBox Movement Data website (https://www.mapbox.com/movement-data)
+The following notes are from the MapBox Movement Data website (https://www.mapbox.com/movement-data).
+
+## What is MapBox Movement? 
+
+1.  Privacy-forward dataset of device density, activity, and movement
+
+2.  Captures non-driving mobile device activity aggregated into geographic tiles of **100-meter resolution (approx. 1 city block)**
+
+## What can I do with this data? 
+
+1.  Understand relative changes in mobile device activity in space across time
+
+2.  Visualize changes in device density by hour of day, across multiple months or years
+
+## Data features 
+
+1.  High-resolution location accuracy sourced from on-device GPS
+
+2.  Sourced from a diverse mix of thousands of different apps (other data sets are tied to a small number of sources which causes bias in the data)
+
+## How is the data structured and delivered? 
+
+1.  **Monthly activity**
+
+    -   Aggregated by monthly time windows
+
+    -   Provides visibility into hour by hour activity on a typical weekday or weekend in any given months
+
+2.  **Activity index**
+
+    -   Mapbox proprietary density metric which reflects the level of activity in the time window and spatial regions for monthly and daily periods.
+
+    -   It is a decimal value ranging from 0 to 1.
+
+    -   A normalization process is applied to smooth out any effects of extreme outlier activity.
+
+3.  **Data deliverables**
+
+    -   CSV files within an organized file and folder structure naming based on geographic zoom tiles and localized time buckets
