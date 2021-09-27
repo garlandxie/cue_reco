@@ -1,0 +1,14 @@
+---
+title: "MapBox Data"
+author: "Garland Xie"
+date: "26/09/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Metadata
+
+The following notes are from the MapBox Movement Data website (https://www.mapbox.com/movement-data)
