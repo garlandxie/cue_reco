@@ -50,3 +50,36 @@ The following notes are from the MapBox Movement Data website (https://www.mapbo
 3.  **Data deliverables**
 
     -   CSV files within an organized file and folder structure naming based on geographic zoom tiles and localized time buckets
+
+## How is the Monthly Activity data sets structured? 
+
+The metadata is from MapBox Movement Data Format website (https://docs.mapbox.com/data/movement/guides/data-format)
+
+1.  Device activity is aggregated over a one-month time window, which allows for periodic updates to reflect changes in typical hourly activity patterns
+
+2.  The provided dataset for this analysis is a 3-month coverage.
+
+3.  Tiles are based on **quadkeys**, which is a numeric reference to a geographic partition at a specified OpenStreetMap zoom level. [After exploring the data, it seems like the tile resolution size is approx. 3000 square meters at a zoom level of 19].
+
+    1.  Data fields for monthly activity:
+
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | Field                  | Description                                                              | Example                                                                        |
+        +:======================:+:========================================================================:+:==============================================================================:+
+        | `geography`            | *For tile aggregation:* \                                                | 032001323000312110                                                             |
+        |                        | Z18 quadkey ID                                                           |                                                                                |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `xlon`                 | Longitude of the center of the bounded area (*tile only*)                | -122.428207397461                                                              |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `xlat`                 | Latitude of the center of the bounded area *(tile only)*                 | 47.6880413955171                                                               |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `bounds`               | The lower left and upper right corners of the bounded area *(tile only)* | -122.42889404296875, 47.68757916850813, -122.42752075195312, 47.68850362252605 |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `activity_index_total` | Normalized activity factor (for all activity types)                      | 0.069267                                                                       |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `agg_day_period`       | *For weekday/weekend:* \                                                 | `0` for a weekday, `1` for a weekend                                           |
+        |                        | An integer that describes whether the day is a weekday or a weekend      |                                                                                |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+        | `agg_time_period`      | *For hourly:* \                                                          | `4` (4:00 AM)                                                                  |
+        |                        | An integer between `0` and `23` that describes the hour of day           |                                                                                |
+        +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
