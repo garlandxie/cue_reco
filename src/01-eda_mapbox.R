@@ -2,7 +2,8 @@
 library(readr)
 library(here)
 library(assertr)
-library()
+library(data.table)  # for manipulating data faster than dplyr
+library(magrittr)
 
 # import ----
 mapbox <- read_csv(
@@ -28,6 +29,28 @@ mapbox |>
   verify(month %in% c("2020-06", "2020-07", "2020-08")) |>
   assert(within_bounds(0, 1), agg_day_period) |>
   assert(within_bounds(0, 11), agg_time_period)
+
+# data cleaning: number of visitors per week -----------------------------------
+
+set.seed(1L)
+
+num_visitors_weekday <-
+  mapbox %>%
+  as.data.table() %>%
+  
+  # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
+  # fall below a certain threshold prior to calculating the index
+  # In that case, it's safer to take the sum rather than the arithmetic means
+  # AF also requested median too, so calculate that too 
+  
+  .[, keyby = .(agg_day_period, month, geography, xlon, xlat, bounds), 
+    .(sum_activity = sum(activity_index_total))] %>%
+  
+  # weekday only, exclude weekends
+  .[agg_day_period == 0, ] %>%
+  .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
+
+
 
 
 
