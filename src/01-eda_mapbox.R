@@ -85,3 +85,30 @@ num_visitors_week <-
     .(sum_activity = sum(activity_index_total))] %>%
   
   .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
+
+# plots ------------------------------------------------------------------------
+
+theme_set(theme_bw())
+
+num_visitors_weekday %>%
+  ggplot(aes(x = sum_activity)) +
+  geom_histogram() +
+  facet_wrap(~month) + 
+  labs(title = "Number of visitors per weekday") + 
+  labs(x = "Total Activity Index")
+
+num_visitors_weekend %>%
+  ggplot(aes(x = sum_activity)) +
+  geom_histogram() + 
+  facet_wrap(~month) + 
+  labs(title = "Number of visitors per weekend") + 
+  labs(x = "Total Activity Index")
+
+num_visitors_week %>%
+  ggplot(aes(x = sum_activity)) +
+  geom_histogram() +
+  facet_wrap(~month) + 
+  labs(title = "Number of visitors per week") + 
+  labs(x = "Total Activity Index")
+
+
