@@ -68,4 +68,20 @@ num_visitors_weekend <-
   .[agg_day_period == 1, ] %>%
   .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
 
+# data cleaning: number of visitors per week -----------------------------------
+
+num_visitors_week <-
+  mapbox %>%
+  as.data.table() %>%
   
+  # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
+  # fall below a certain threshold prior to calculating the index
+  # In that case, it's safer to take the sum rather than the arithmetic means
+  # AF also requested median too, so calculate that too 
+  
+  # Combine weekday and weekends per quadkey, which means a weekly activity
+  # So, omit agg_day_period as a grouping variable 
+  .[, keyby = .(month, geography, xlon, xlat, bounds), 
+    .(sum_activity = sum(activity_index_total))] %>%
+  
+  .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
