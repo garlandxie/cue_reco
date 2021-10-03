@@ -11,27 +11,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Metadata
 
-The following notes are from the MapBox Movement Data website (https://www.mapbox.com/movement-data).
+The following notes are from the MapBox Movement Data website (<https://www.mapbox.com/movement-data>).
 
-## What is MapBox Movement? 
+## What is MapBox Movement?
 
 1.  Privacy-forward dataset of device density, activity, and movement
 
 2.  Captures non-driving mobile device activity aggregated into geographic tiles of **100-meter resolution (approx. 1 city block)**
 
-## What can I do with this data? 
+## What can I do with this data?
 
 1.  Understand relative changes in mobile device activity in space across time
 
 2.  Visualize changes in device density by hour of day, across multiple months or years
 
-## Data features 
+## Data features
 
 1.  High-resolution location accuracy sourced from on-device GPS
 
 2.  Sourced from a diverse mix of thousands of different apps (other data sets are tied to a small number of sources which causes bias in the data)
 
-## How is the data structured and delivered? 
+## How is the data structured and delivered?
 
 1.  **Monthly activity**
 
@@ -51,9 +51,9 @@ The following notes are from the MapBox Movement Data website (https://www.mapbo
 
     -   CSV files within an organized file and folder structure naming based on geographic zoom tiles and localized time buckets
 
-## How is the Monthly Activity data sets structured? 
+## How is the Monthly Activity data sets structured?
 
-The metadata is from MapBox Movement Data Format website (https://docs.mapbox.com/data/movement/guides/data-format)
+The metadata is from MapBox Movement Data Format website (<https://docs.mapbox.com/data/movement/guides/data-format>)
 
 1.  Device activity is aggregated over a one-month time window, which allows for periodic updates to reflect changes in typical hourly activity patterns
 
@@ -66,7 +66,7 @@ The metadata is from MapBox Movement Data Format website (https://docs.mapbox.co
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
         | Field                  | Description                                                              | Example                                                                        |
         +:======================:+:========================================================================:+:==============================================================================:+
-        | `geography`            | *For tile aggregation:* \                                                | 032001323000312110                                                             |
+        | `geography`            | *For tile aggregation:*\                                                 | 032001323000312110                                                             |
         |                        | Z18 quadkey ID                                                           |                                                                                |
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
         | `xlon`                 | Longitude of the center of the bounded area (*tile only*)                | -122.428207397461                                                              |
@@ -77,9 +77,44 @@ The metadata is from MapBox Movement Data Format website (https://docs.mapbox.co
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
         | `activity_index_total` | Normalized activity factor (for all activity types)                      | 0.069267                                                                       |
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
-        | `agg_day_period`       | *For weekday/weekend:* \                                                 | `0` for a weekday, `1` for a weekend                                           |
+        | `agg_day_period`       | *For weekday/weekend:*\                                                  | `0` for a weekday, `1` for a weekend                                           |
         |                        | An integer that describes whether the day is a weekday or a weekend      |                                                                                |
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
-        | `agg_time_period`      | *For hourly:* \                                                          | `4` (4:00 AM)                                                                  |
+        | `agg_time_period`      | *For hourly:*\                                                           | `4` (4:00 AM)                                                                  |
         |                        | An integer between `0` and `23` that describes the hour of day           |                                                                                |
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
+
+# Activity Index 
+
+The metadata is from MapBox Movement Data Format website (<https://docs.mapbox.com/data/movement/guides/activity-index/>)
+
+## What is the activity index? 
+
+-   Mapbox proprietary movement indicator that reflects the level of activity in the specified time span and geographic region
+
+-   How to calculate the index:
+
+    1.  Raw data is aggregated by time span and geography, representing the total daily activity within each geographic unit.
+
+    2.  The anonymization process is applied. In this process, small random noise
+        is applied to total counts and geographic areas with counts below a
+        minimum threshold are dropped.
+
+    3.  A scaling factor is calculated by taking the 99.9th percentile of anonymized counts across all geographic unit and days in the baseline time span.
+
+    4.  Data is normalized by dividing the anonymized counts for each day and geographic unit.
+
+    5.  All normalized counts are rounded to the sixth decimal digit.
+
+## Limitations
+
+-   Any mobility data set is inherently skewed between highly populated regions (urban and metro areas) and sparsely populated regions (rural areas)
+
+-   Quadkeys with zero activity in a given day are excluded from that day's data. As a result, when trying to compare activity aggregated over multiple days, [Mapbox] do not recommend trying to take an average of the activity (since this value would be biased by the omitted quadkeys). Notes are from: <https://docs.mapbox.com/data/movement/guides/data-processing-guidelines/>
+
+-   Due to [strict privacy requirements], [Mapbox] omit quadkeys that do not pass minimum activity thresholds over the period of aggregation.
+
+-   [Since the activity index has no units], any decision made from Mapbox Movement data should be informed by a comparison, whether that's a comparison of the activity difference between two
+    blocks of a city on any given day, of the change in activity for a given location over some time span, or some combination of the above.
+
+-   Comparisons made over short timescales and short distances are more trustworthy than those made over long timescales and distances.
