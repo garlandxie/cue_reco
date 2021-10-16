@@ -19,7 +19,7 @@ names(mapbox)
 
 # validate ----
 
-# QA/QC b/c there's a lot of data (~ 1.3 million rows)
+# QA/QC b/c there's a lot of data (~ 13 million rows)
 mapbox %>%
   verify(xlat >= 43) %>%
   verify(xlon <= 79) %>%
@@ -123,4 +123,5 @@ num_visitors_week %>%
   labs(title = "Number of visitors per week") + 
   labs(x = "Total Activity Index")
 
+# save to disk ----------------------------------------------------------------
 
