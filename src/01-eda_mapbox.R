@@ -46,6 +46,7 @@ mobile_act_weekday <-
   .[, 
     list(
       sum_activity = sum(activity_index_total), 
+      median_activity = median(activity_index_total), 
       num_quadkeys = .N
       ),
     keyby = 
@@ -53,7 +54,16 @@ mobile_act_weekday <-
   
   # weekday only, exclude weekends
   .[agg_day_period == 0, ] %>%
-  .[, list(month, geography, xlon, xlat, bounds, sum_activity, num_quadkeys)]
+  .[, 
+    list(
+      month, 
+      geography, 
+      xlon, 
+      xlat, 
+      bounds, 
+      sum_activity, 
+      median_activity, 
+      num_quadkeys)]
 
 # data cleaning: number of visitors per weekend --------------------------------
 
@@ -69,6 +79,7 @@ mobile_act_weekend <-
   .[, 
     list(
       sum_activity = sum(activity_index_total), 
+      median_activity = median(activity_index_total), 
       num_quadkeys = .N
     ),
     keyby = 
@@ -76,7 +87,16 @@ mobile_act_weekend <-
   
   # weekday only, exclude weekends
   .[agg_day_period == 1, ] %>%
-  .[, list(month, geography, xlon, xlat, bounds, sum_activity, num_quadkeys)]
+  .[, 
+    list(
+      month, 
+      geography, 
+      xlon, 
+      xlat, 
+      bounds,
+      sum_activity,
+      median_activity, 
+      num_quadkeys)]
 
 # data cleaning: number of visitors per week -----------------------------------
 
@@ -93,10 +113,20 @@ mobile_act_week <-
   # So, omit agg_day_period as a grouping variable 
   .[, 
     list(sum_activity = sum(activity_index_total),
+         median_activity = median(activity_index_total),
          num_quadkeys = .N), 
     keyby = list(month, geography, xlon, xlat, bounds)] %>%
   
-  .[, list(month, geography, xlon, xlat, bounds, sum_activity, num_quadkeys)]
+  .[, 
+    list(
+      month, 
+      geography, 
+      xlon, 
+      xlat, 
+      bounds, 
+      sum_activity, 
+      median_activity, 
+      num_quadkeys)]
 
 # plots ------------------------------------------------------------------------
 
