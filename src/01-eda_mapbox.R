@@ -34,7 +34,7 @@ mapbox %>%
 
 set.seed(1L)
 
-num_visitors_weekday <-
+mobile_act_weekday <-
   mapbox %>%
   as.data.table() %>%
   
@@ -57,7 +57,7 @@ num_visitors_weekday <-
 
 # data cleaning: number of visitors per weekend --------------------------------
 
-num_visitors_weekend <-
+mobile_act_weekend <-
   mapbox %>%
   as.data.table() %>%
   
@@ -80,7 +80,7 @@ num_visitors_weekend <-
 
 # data cleaning: number of visitors per week -----------------------------------
 
-num_visitors_week <-
+mobile_act_week <-
   mapbox %>%
   as.data.table() %>%
   
@@ -102,21 +102,21 @@ num_visitors_week <-
 
 theme_set(theme_bw())
 
-num_visitors_weekday %>%
+mobile_act_weekday %>%
   ggplot(aes(x = sum_activity)) +
   geom_histogram() +
   facet_wrap(~month) + 
   labs(title = "Number of visitors per weekday") + 
   labs(x = "Total Activity Index")
 
-num_visitors_weekend %>%
+mobile_act_weekend %>%
   ggplot(aes(x = sum_activity)) +
   geom_histogram() + 
   facet_wrap(~month) + 
   labs(title = "Number of visitors per weekend") + 
   labs(x = "Total Activity Index")
 
-num_visitors_week %>%
+mobile_act_week %>%
   ggplot(aes(x = sum_activity)) +
   geom_histogram() +
   facet_wrap(~month) + 
@@ -127,18 +127,18 @@ num_visitors_week %>%
 
 # mobile activity per week 
 saveRDS(
-  object = num_visitors_week, 
+  object = mobile_act_week, 
   file = here("data", "working", "mobile_activity_week.rds")
 )
 
 # mobile activity per weekend 
 saveRDS(
-  object = num_visitors_weekend, 
+  object = mobile_act_weekend, 
   file = here("data", "working", "mobile_activity_weekend.rds")
 )
 
 # mobile activity per weekday 
 saveRDS(
-  object = num_visitors_weekday, 
+  object = mobile_act_weekday, 
   file = here("data", "working", "mobile_activity_weekday.rds")
 )
