@@ -91,10 +91,12 @@ num_visitors_week <-
   
   # Combine weekday and weekends per quadkey, which means a weekly activity
   # So, omit agg_day_period as a grouping variable 
-  .[, keyby = .(month, geography, xlon, xlat, bounds), 
-    .(sum_activity = sum(activity_index_total))] %>%
+  .[, 
+    list(sum_activity = sum(activity_index_total),
+         num_quadkeys = .N), 
+    keyby = list(month, geography, xlon, xlat, bounds)] %>%
   
-  .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
+  .[, list(month, geography, xlon, xlat, bounds, sum_activity, num_quadkeys)]
 
 # plots ------------------------------------------------------------------------
 
