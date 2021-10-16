@@ -125,3 +125,20 @@ num_visitors_week %>%
 
 # save to disk ----------------------------------------------------------------
 
+# mobile activity per week 
+saveRDS(
+  object = num_visitors_week, 
+  file = here("data", "working", "mobile_activity_week.rds")
+)
+
+# mobile activity per weekend 
+saveRDS(
+  object = num_visitors_weekend, 
+  file = here("data", "working", "mobile_activity_weekend.rds")
+)
+
+# mobile activity per weekday 
+saveRDS(
+  object = num_visitors_weekday, 
+  file = here("data", "working", "mobile_activity_weekday.rds")
+)
