@@ -43,12 +43,17 @@ num_visitors_weekday <-
   # In that case, it's safer to take the sum rather than the arithmetic means
   # AF also requested median too, so calculate that too 
   
-  .[, keyby = .(agg_day_period, month, geography, xlon, xlat, bounds), 
-    .(sum_activity = sum(activity_index_total))] %>%
+  .[, 
+    list(
+      sum_activity = sum(activity_index_total), 
+      num_quadkeys = .N
+      ),
+    keyby = 
+      list(agg_day_period, month, geography, xlon, xlat, bounds)] %>%
   
   # weekday only, exclude weekends
   .[agg_day_period == 0, ] %>%
-  .[, list(month, geography, xlon, xlat, bounds, sum_activity)]
+  .[, list(month, geography, xlon, xlat, bounds, sum_activity, num_quadkeys)]
 
 # data cleaning: number of visitors per weekend --------------------------------
 
