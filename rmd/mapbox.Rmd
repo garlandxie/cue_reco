@@ -84,6 +84,36 @@ The metadata is from MapBox Movement Data Format website (<https://docs.mapbox.c
         |                        | An integer between `0` and `23` that describes the hour of day           |                                                                                |
         +------------------------+--------------------------------------------------------------------------+--------------------------------------------------------------------------------+
 
+**Important note:**
+
+According to AF, the time windows for `agg_time_period` are actually 2 hours apart!.
+
+In that case, I converted the existing time windows below:
+
+-    0: 12 am - 2 am
+
+-   1: 2 am - 4 am
+
+-   2: 4 am - 6 am
+
+-   3: 6 am - 8 am
+
+-   4: 8 am - 10 am
+
+-   5: 10 am - 12 pm
+
+-   6: 12 pm - 2 pm
+
+-   7: 2 pm - 4pm
+
+-   8: 4 pm - 6 pm
+
+-   9: 6 pm - 8 pm
+
+-   10: 8 pm - 10 pm
+
+-   11: 10 pm - 12 am
+
 # Activity Index
 
 The metadata is from MapBox Movement Data Format website (<https://docs.mapbox.com/data/movement/guides/activity-index/>)
