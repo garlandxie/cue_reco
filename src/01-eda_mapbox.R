@@ -128,6 +128,59 @@ mobile_act_week <-
       median_activity, 
       num_quadkeys)]
 
+# data cleaning: number of visitors during peak hours --------------------------
+
+# Important note!
+# According to AF, the time windows for agg_time_period
+# are 2 hrs apart
+
+# To make it easier to read, convert the existing time windows
+# 0: 12 am - 2 am
+# 1: 2 am - 4 am 
+# 2: 4 am - 6 am
+# 3: 6 am - 8 am
+# 4: 8 am - 10 am
+# 5: 10 am - 12 pm
+# 6: 12 pm - 2 pm
+# 7: 2 pm - 4pm
+# 8: 4 pm - 6 pm
+# 9: 6 pm - 8 pm
+# 10: 8 pm - 10 pm
+# 11: 10 pm - 12 am
+
+mobile_act_peak_hours <-
+  mapbox %>%
+  as.data.table() %>%
+  
+  # Peak hours are 10 am - 4 pm 
+  # so need to filter the dataset through
+  # 5-7 for agg_time_period 
+  .[agg_time_period %in% c(5, 6, 7)] %>%
+  
+  # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
+  # fall below a certain threshold prior to calculating the index
+  # In that case, it's safer to take the sum rather than the arithmetic means
+  # AF also requested median too, so calculate that too 
+  
+  # Combine weekday and weekends per quadkey, which means a weekly activity
+  # So, omit agg_day_period as a grouping variable 
+  .[, 
+    list(sum_activity = sum(activity_index_total),
+         median_activity = median(activity_index_total),
+         num_quadkeys = .N), 
+    keyby = list(month, geography, xlon, xlat, bounds)] %>%
+  
+  .[, 
+    list(
+      month, 
+      geography, 
+      xlon, 
+      xlat, 
+      bounds, 
+      sum_activity, 
+      median_activity, 
+      num_quadkeys)]
+
 # plots ------------------------------------------------------------------------
 
 theme_set(theme_bw())
