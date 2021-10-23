@@ -30,13 +30,17 @@ mapbox %>%
   assert(within_bounds(0, 1), agg_day_period) %>% 
   assert(within_bounds(0, 11), agg_time_period)
 
+# convert to data table --------------------------------------------------------
+
+mapbox_dt <- as.data.table(mapbox)
+
 # data cleaning: number of visitors per weekday --------------------------------
 
 set.seed(1L)
 
 mobile_act_weekday <-
-  mapbox %>%
-  as.data.table() %>%
+ 
+  mapbox_dt %>%
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
@@ -68,8 +72,8 @@ mobile_act_weekday <-
 # data cleaning: number of visitors per weekend --------------------------------
 
 mobile_act_weekend <-
-  mapbox %>%
-  as.data.table() %>%
+  
+  mapbox_dt %>%
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
@@ -101,8 +105,8 @@ mobile_act_weekend <-
 # data cleaning: number of visitors per week -----------------------------------
 
 mobile_act_week <-
-  mapbox %>%
-  as.data.table() %>%
+ 
+  mapbox_dt %>%
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
@@ -149,8 +153,8 @@ mobile_act_week <-
 # 11: 10 pm - 12 am
 
 mobile_act_peak_hours <-
-  mapbox %>%
-  as.data.table() %>%
+  
+  mapbox_dt %>%
   
   # Peak hours are 10 am - 4 pm 
   # so need to filter the dataset through
