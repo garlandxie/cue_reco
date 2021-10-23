@@ -5,6 +5,7 @@ library(assertr)     # for validating data
 library(data.table)  # for manipulating data faster than dplyr
 library(magrittr)    # for 'piping' data table code 
 library(ggplot2)     # for visualizing data 
+library(patchwork)
 
 # import ----
 mapbox <- read_csv(
@@ -263,6 +264,27 @@ mobile_act_week %>%
   facet_wrap(~month) + 
   labs(title = "Number of visitors per week") + 
   labs(x = "Total Activity Index")
+
+# plots: off vs peak hours -----------------------------------------------------
+
+hist_peak_hours <- mobile_act_peak_hours %>%
+  ggplot(aes(x = sum_activity)) +
+  geom_histogram() +
+  facet_wrap(~month) + 
+  labs(
+    title = "Peaks Hours (10 am - 4pm)",
+    x     = "Total Activity Index"
+    )
+
+hist_off_hours <- mobile_act_off_hours %>%
+  ggplot(aes(x = sum_activity)) +
+  geom_histogram() +
+  facet_wrap(~month) + 
+  labs(
+    title = "Off Hours (not between 10am - 4pm)",
+    x     = "Total Activity Index")
+
+hist_off_hours + hist_peak_hours
 
 # save to disk ----------------------------------------------------------------
 
