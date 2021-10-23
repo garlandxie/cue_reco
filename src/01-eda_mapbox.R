@@ -4,6 +4,7 @@ library(here)        # for creating relative file paths
 library(assertr)     # for validating data
 library(data.table)  # for manipulating data faster than dplyr
 library(magrittr)    # for 'piping' data table code 
+library(ggplot2)     # for visualizing data 
 
 # import ----
 mapbox <- read_csv(
