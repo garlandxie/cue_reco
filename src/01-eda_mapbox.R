@@ -1,9 +1,9 @@
-# libraries ----
-library(readr)
-library(here)
-library(assertr)
+# libraries -------------------------------------------------------------------- 
+library(readr)       # for uploading csv very quickly
+library(here)        # for creating relative file paths 
+library(assertr)     # for validating data
 library(data.table)  # for manipulating data faster than dplyr
-library(magrittr)
+library(magrittr)    # for 'piping' data table code 
 
 # import ----
 mapbox <- read_csv(
