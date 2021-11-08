@@ -145,3 +145,7 @@ The metadata is from MapBox Movement Data Format website (<https://docs.mapbox.c
 -   [Since the activity index has no units], any decision made from Mapbox Movement data should be informed by a comparison, whether that's a comparison of the activity difference between two blocks of a city on any given day, of the change in activity for a given location over some time span, or some combination of the above.
 
 -   Comparisons made over short timescales and short distances are more trustworthy than those made over long timescales and distances.
+
+# Useful Resources
+
+- Twitch Stream: Hands on with #MapboxMovement (https://www.twitch.tv/videos/654844837?filter=all&sort=time)
