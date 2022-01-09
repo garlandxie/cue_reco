@@ -19,13 +19,16 @@ mobile_act_weekday <-
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
+  
   # In that case, it's safer to take the sum rather than the arithmetic means
+  # Similarly, use interquartile range instead of standard deviation
   # AF also requested median too, so calculate that too 
   
   .[, 
     list(
       sum_activity = sum(activity_index_total), 
       median_activity = median(activity_index_total), 
+      iqr_activity = IQR(activity_index_total),
       num_quadkeys = .N
       ),
     keyby = 
@@ -42,6 +45,7 @@ mobile_act_weekday <-
       bounds, 
       sum_activity, 
       median_activity, 
+      iqr_activity, 
       num_quadkeys)]
 
 # data cleaning: number of visitors per weekend --------------------------------
