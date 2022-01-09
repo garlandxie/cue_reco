@@ -150,9 +150,7 @@ mobile_act_peak_hours <-
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
-  
   # In that case, it's safer to take the sum rather than the arithmetic means
-  # Similarly, use interquartile range instead of standard deviation
   # AF also requested median too, so calculate that too 
   
   # Combine weekday and weekends per quadkey, which means a weekly activity
@@ -205,7 +203,9 @@ mobile_act_off_hours <-
   
   # Mapbox omits quadkeys (geographic column) if total absolute mobile activity
   # fall below a certain threshold prior to calculating the index
+  
   # In that case, it's safer to take the sum rather than the arithmetic means
+  # Similarly, use interquartile range instead of standard deviation
   # AF also requested median too, so calculate that too 
   
   # Combine weekday and weekends per quadkey, which means a weekly activity
@@ -213,6 +213,7 @@ mobile_act_off_hours <-
   .[, 
     list(sum_activity = sum(activity_index_total),
          median_activity = median(activity_index_total),
+         iqr_activity = IQR(activity_index_total),
          num_quadkeys = .N), 
     keyby = list(month, geography, xlon, xlat, bounds)] %>%
   
@@ -225,6 +226,7 @@ mobile_act_off_hours <-
       bounds, 
       sum_activity, 
       median_activity, 
+      iqr_activity, 
       num_quadkeys)]
 
 # plots ------------------------------------------------------------------------
